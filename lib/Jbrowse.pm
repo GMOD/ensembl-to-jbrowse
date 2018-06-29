@@ -19,7 +19,7 @@ use File::Copy qw(copy);
 use File::Path qw(make_path remove_tree);
 use FindBin qw($Bin);
 
-our $VERSION = '1.0.0';
+our $VERSION = '1.0.1';
 our @EXPORT = qw($VERSION);
 
 use constant JQUERY => 'https://code.jquery.com/jquery-3.1.0.min.js';
