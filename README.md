@@ -4,7 +4,20 @@ Scripts to automagically create a JBrowse instance from an Ensembl FTP URL, by @
 
 A product of [GCC/BOSC 2018 CollaborationFest](https://galaxyproject.org/events/gccbosc2018/collaboration/)
 
-:warning: This is known to work on the variants of JBrowse __*before*__ the webpack conversion.  Testing is needed to confirm functionallity with v1.13.0+.
+:warning: This is known to work on the variants of JBrowse __*before*__ the webpack conversion.  Modification will be requied for JBrowse v1.13.0+.
+
+<!-- TOC depthFrom:2 -->
+
+- [Scripts](#scripts)
+    - [ensemblToJbrowse.pl](#ensembltojbrowsepl)
+- [Installation](#installation)
+    - [Dependencies](#dependencies)
+    - [Scripts](#scripts-1)
+        - [System install](#system-install)
+        - [Prefix install](#prefix-install)
+    - [Minimal build images](#minimal-build-images)
+
+<!-- /TOC -->
 
 ## Scripts
 
@@ -40,13 +53,13 @@ You will need to install the following tools and ensure they are available on pa
 
 Use cpanm to install the package to your prefered location.
 
-System install:
+#### System install
 
 ```
 cpanm install https://github.com/GMOD/ensembl-to-jbrowse/archive/master.tar.gz
 ```
 
-Prefix install:
+#### Prefix install
 
 ```
 cpanm install -l $PREFIX_PATH https://github.com/GMOD/ensembl-to-jbrowse/archive/master.tar.gz
