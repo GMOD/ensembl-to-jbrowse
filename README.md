@@ -12,7 +12,7 @@ Scripts included here are inteded to aid setup of new species from the Ensembl F
 
 ### ensemblToJbrowse.pl
 
-This script takes a FTP url for the species of interest and the `jbrowse.zip` release archive downloaded from jbrowse.org.
+This script takes a FTP url for the DNA FASTA folder of the species of interest and path or URL to a `jbrowse.zip` release archive from jbrowse.org.
 
 The Ensembl URL should be of the form:
 
@@ -20,7 +20,23 @@ The Ensembl URL should be of the form:
 ftp://ftp.ensembl.org/pub/release-$RELEASE_NUM/fasta/$SPECIES/dna/
 ```
 
+Technically EnsemblGenomes should also work, but milage may vary due to some inconsitancy in file naming:
+
+```
+ftp://ftp.ensemblgenomes.org/pub/release-39/bacteria//fasta/bacteria_91_collection/escherichia_coli/dna/
+```
+
+:information_source: This has to be ftp to allow listing of the content.
+
 ## Installation
+
+### Dependencies
+
+You will need to install the following tools and ensure they are available on path:
+
+* samtools
+
+### Scripts
 
 Use cpanm to install the package to your prefered location.
 

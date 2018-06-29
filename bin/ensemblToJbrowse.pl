@@ -12,10 +12,10 @@ ensemblToJbrowse.pl [options]
 
   Required parameters
     -delpoy    -d   Deploy to this path
-    -jrelease  -j   Location of release []
+    -jrelease  -j   Location of release [local file or URL]
 
   Parameters:
-    -ensembl   -e   Link to FTP DNA area of Ensemble release [ftp://ftp.ensembl.org/pub/grch37/release-85/fasta/homo_sapiens/dna]
+    -ensembl   -e   Link to FTP DNA area of Ensemble release [ftp://ftp.ensembl.org/pub/grch37/release-92/fasta/homo_sapiens/dna/]
                      - can be defined multiple times (unless -remap is set)
     -biotype   -b   Biotype to select [protein_coding]
     -type      -t   Type of element to select, gene/transcript... (requires biotype to match) [transcript]
@@ -106,7 +106,7 @@ use Archive::Extract;
 $Archive::Extract::PREFER_BIN = 1;
 $Archive::Extract::WARN = 1;
 
-const my $DEFAULT_ENSE => 'ftp://ftp.ensembl.org/pub/grch37/release-85/fasta/homo_sapiens/dna';
+const my $DEFAULT_ENSE => 'ftp://ftp.ensembl.org/pub/grch37/release-92/fasta/homo_sapiens/dna/';
 
 my $options = opts();
 
@@ -283,6 +283,8 @@ sub ensembl_ftp {
   my $options = shift;
   my $fasta_url = $options->{'ensembl'};
 
+  $fasta_url =~ s/^https?/ftp/;
+
   my ($release) = $fasta_url =~ m|/release\-([[:digit:]]+)/|;
 
   my $ff = File::Fetch->new(uri => $fasta_url, tempdir_root => $options->{'tmpdir'});
@@ -319,10 +321,12 @@ sub ensembl_ftp {
   system(sprintf 'gunzip -c %s/%s > %s/genome.fa', $dest_dir, $fasta_file, $dest_dir) && die "Failed to decompress $fa_type.fa.gz in $dest_dir: $!\n";
 
   my $release_base = $options->{'ensembl'};
+  $release_base =~ s/^https?/ftp/;
   $release_base =~ s|/fasta.*||;
 
   $ff = File::Fetch->new(uri => $release_base, tempdir_root => $options->{'tmpdir'});
   $where = $ff->fetch( to => \$listing );
+
   my ($annot_type) = $listing =~ m/(gff3)$/xms;
   unless($annot_type) {
     ($annot_type) = $listing =~ m/(gtf)$/xms;
@@ -333,6 +337,8 @@ sub ensembl_ftp {
   $gxf_url =~ s|/dna$||;
   $gxf_url =~ s|/fasta/|/${annot_type}/|;
 
+  # @todo to work with ensemble genomes this need to generate a listing and select as there are problems
+  # example: ftp://ftp.ensemblgenomes.org/pub/release-39/bacteria//fasta/bacteria_91_collection/escherichia_coli/dna/
   my $get_gxf = sprintf '%s/%s.%s.%d.%s%s.gz', $gxf_url, $species, $build, $release, ($options->{'chr'} ? q{chr.} : q{}), $annot_type;
   warn "Fetching: $get_gxf\n";
   $ff = File::Fetch->new(uri => $get_gxf);
