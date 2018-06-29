@@ -4,14 +4,15 @@
 
 =head1 NAME
 
-buildIndex.pl - Parses */*/JBrowse/jbrowse_conf.json and builds an index page with all links.
+buildJbrowseIndex.pl - Parses */*/JBrowse/jbrowse_conf.json and builds an index page with all links.
 
 =head1 SYNOPSIS
 
-buildIndex.pl [options]
+buildJbrowseIndex.pl [options]
 
   Required parameters
     -deploy    -d   Deploy to this path
+    -title     -t   Title for index page (quoted)
 
   Other:
     -help      -h   Brief help message.
@@ -47,6 +48,7 @@ sub opts {
               'm|man' => \$opts{'m'},
               'v|version' => \$opts{'v'},
               'd|deploy=s' => \$opts{'deploy'},
+              't|title=s' => \$opts{'title'},
   ) or pod2usage(2);
 
   pod2usage(-verbose => 1, -exitval => 0) if(defined $opts{'h'});

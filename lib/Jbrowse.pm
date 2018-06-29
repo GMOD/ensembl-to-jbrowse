@@ -19,7 +19,7 @@ use File::Copy qw(copy);
 use File::Path qw(make_path remove_tree);
 use FindBin qw($Bin);
 
-our $VERSION = '1.0.0';
+our $VERSION = '1.0.1';
 our @EXPORT = qw($VERSION);
 
 use constant JQUERY => 'https://code.jquery.com/jquery-3.1.0.min.js';
@@ -186,6 +186,7 @@ sub confs_to_index {
 
   my @sets;
   my @ul_li;
+  my $title = $options->{'title'};
 
   my $base_query = sprintf '%s/*/*/JBrowse/jbrowse_conf.json', $deploy;
   my @confs = glob $base_query;
@@ -241,13 +242,13 @@ sub confs_to_index {
   for my $s(@sets) {
     my $sb_out = sprintf '%s/%s_%s.html', $idx_base, $s->{species}, $s->{build};
     open my $H_OUT, '>', $sb_out;
-    printf $H_OUT $html_format, $ul_list, $s->{links};
+    printf $H_OUT $html_format, $title, $title, $ul_list, $s->{links};
     close $H_OUT;
   }
 
   my $final_index = sprintf '%s/index.html', $deploy;
   open my $IDX, '>', $final_index;
-  printf $IDX $html_format, $ul_list, q{<p>Select tab to see available datasets</p>};
+  printf $IDX $html_format, $title, $title, $ul_list, q{<p>Select tab to see available datasets</p>};
   close $IDX;
 
   copy("$Bin/../data/script.js", $idx_base.'/script.js');
@@ -262,14 +263,14 @@ sub base_html {
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>CGP JBrowse datasets</title>
+    <title>%s</title>
     <script type="text/javascript" src="/index/jquery.min.js"></script>
     <script src="/index/script.js"></script>
     <link rel="stylesheet" href="/index/style.css">
   </head>
   <body>
   <div id="content">
-    <h1>CGP JBrowse datasets</h1>
+    <h1>%s</h1>
     <div id="tab-container">
       <ul>
         %s
