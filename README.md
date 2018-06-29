@@ -10,6 +10,7 @@ A product of [GCC/BOSC 2018 CollaborationFest](https://galaxyproject.org/events/
 
 - [Scripts](#scripts)
     - [ensemblToJbrowse.pl](#ensembltojbrowsepl)
+    - [buildJbrowseIndex.pl](#buildjbrowseindexpl)
 - [Installation](#installation)
     - [Dependencies](#dependencies)
     - [Scripts](#scripts-1)
@@ -22,6 +23,8 @@ A product of [GCC/BOSC 2018 CollaborationFest](https://galaxyproject.org/events/
 ## Scripts
 
 Scripts included here are inteded to aid setup of new species from the Ensembl FTP servers.
+
+Please see commmand line help (`-h`, `--help`) for arguments.
 
 ### ensemblToJbrowse.pl
 
@@ -40,6 +43,23 @@ ftp://ftp.ensemblgenomes.org/pub/release-39/bacteria//fasta/bacteria_91_collecti
 ```
 
 :information_source: This has to be ftp to allow listing of the content.
+
+### buildJbrowseIndex.pl
+
+This script builds an index page of species/build deliniated datasouce lists by interrogatings the
+`jbrowse_conf.json` file within the jbrowse deployment.  It is intended to be used on configurations
+setup using the `ensemblToJbrowse.pl` script, but will work for any deploymens of the form:
+
+```
+*/*/JBrowse/jbrowse_conf.json
+```
+
+The resulting index is placed in the root of the area and would look something like this:
+
+![Example JBrowse index](images/jbrowse-index.png)
+
+:information_source: This will onyl work if you have populated the `jbrowse_conf.json` for the individual
+deployment folders.
 
 ## Installation
 

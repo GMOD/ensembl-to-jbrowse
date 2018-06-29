@@ -6,7 +6,7 @@ WriteMakefile(
   NAME          => 'ensembl-to-jbrowse',
   VERSION_FROM  => 'lib/Jbrowse.pm',
   LICENSE       => 'mit', # http://search.cpan.org/~dagolden/CPAN-Meta-2.142690/lib/CPAN/Meta/Spec.pm#license
-  EXE_FILES     => [qw( bin/buildIndex.pl
+  EXE_FILES     => [qw( bin/buildJbrowseIndex.pl
                         bin/ensemblToJbrowse.pl )],
   PREREQ_PM     => {
                      'Archive::Extract' => 0.80,
